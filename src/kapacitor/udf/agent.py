@@ -86,7 +86,7 @@ class Agent(object):
             # Write message len
             encodeUvarint(self._out, len(data))
             # Write message
-            self._out.write(data)
+            self._out.write(data.decode('utf8'))
             if flush:
                 self._out.flush()
         finally:
@@ -101,7 +101,7 @@ class Agent(object):
                 size = decodeUvarint32(self._in)
                 data = self._in.read(size)
 
-                request.ParseFromString(data)
+                request.ParseFromString(data.encode('utf8'))
 
                 # use parsed message
                 msg = request.WhichOneof("message")
